@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ";
+}
+@model IEnumerable<QLBH.Models.Novel>
+
+
+<section class="mt-4 py-5" style="background-color: #fff7ef;">
+    <div class="container my-2">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <h1>Danh sách Novels</h1>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="float-md-right">
+                    <form asp-controller="Book" asp-action="Index" method="get" class="form-inline">
+                        <input class="form-control" type="text" name="searchString" placeholder="Tìm kiếm" onfocus="this.placeholder=''" onblur="this.placeholder='Tytuł'" style="max-width: 70%;">
+                        <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-xl-2 col-md-3 col-sm-4 mb-3 col-6">
+                        <a asp-action="Details" asp-route-id="@item.NovelID" class="text-dark">
+                            <img src="~/img/books/ksiazka.jpg" class="img-fluid" />
+                            <p class="h6 py-0 mt-3 mb-0">
+                                <b>@Html.DisplayFor(modelItem => item.Title)</b>
+                            </p>
+                        </a>
+                        <p class="py-0 mt-0 mb-2 text-muted">
+                            @Html.DisplayFor(modelItem => item.Author)
+                        </p>
+                        <div class="row">
+                            <div class="col-8 my-auto">
+                                <p class="py-0 my-0 text-orange">
+                                    <b> @Html.DisplayFor(modelItem => item.Price) zł</b>
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <div class="float-right">
+                                    <a asp-action="AddToBasket" asp-route-id="@item.NovelID">
+                                        <button class="btn btn-sm btn-outline-orange">
+                                            <i class="fas fa-shopping-basket"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+            <p>No Novels available.</p>
+            }
+</div>
+
+    </div>
+
+
+</section>
